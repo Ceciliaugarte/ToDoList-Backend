@@ -7,11 +7,38 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   getUsers() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({
+      include: {
+        tasks: {
+          select: {
+            title: true,
+            description: true,
+            dueDate: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+    });
   }
 
   getUserById(id: number) {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        tasks: {
+          select: {
+            title: true,
+            description: true,
+            dueDate: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+    });
   }
 
   createOneUser(data: Prisma.UserCreateInput) {
