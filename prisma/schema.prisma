@@ -14,18 +14,18 @@ datasource db {
 }
 
 model User{
-  id BigInt @default(autoincrement()) @id
+  id Int @default(autoincrement()) @id
   username String @unique
   password String
-  tasks Task[]
+ // tasks Task[]
 }
 
 model Task{
-  id BigInt @default(autoincrement()) @id
+  id Int @default(autoincrement()) @id
   title String   @db.VarChar(255)
   description String? @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author User @relation(fields: [authorId], references: [id])
-  authorId BigInt
+  //author User @relation(fields: [authorId], references: [id])
+  //authorId BigInt
 }

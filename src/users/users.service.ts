@@ -1,37 +1,45 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
-  index() {
-    //Busca en base de datos
+  constructor(private prisma: PrismaService) {}
 
-    return 'Obtaining all users';
+  getUsers() {
+    return this.prisma.user.findMany();
   }
 
-  show(id: number) {
-    //Busca en base de datos
-    const UserFound = 'Obtaining one user';
-    if (!UserFound) {
-      throw new NotFoundException('User not found');
+  getUserById(id: number) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  createOneUser(data: Prisma.UserCreateInput) {
+    return this.prisma.user.create({ data });
+  }
+
+  async updateUserById(id: number, data: Prisma.UserUpdateInput) {
+    const userFound = await this.getUserById(id);
+    if (!userFound) {
+      throw new HttpException('User not found', 404);
     }
-
-    return UserFound;
-  }
-
-  store(user: string) {
-    return 'User created';
-  }
-  update() {
-    return 'User updated';
-  }
-  updateStatus() {
-    return 'User status updated';
-  }
-  destroy() {
-    try {
-      return 'User deleted';
-    } catch (error) {
-      throw new NotFoundException('User was not found');
+    if (data.username) {
+      const userWithSameUsername = await this.prisma.user.findUnique({
+        where: { username: data.username as string },
+      });
+      if (userWithSameUsername && userWithSameUsername.id !== id) {
+        throw new HttpException('Username already taken', 400);
+      }
     }
+    return this.prisma.user.update({ where: { id }, data });
+  }
+
+  async deleteUserById(id: number) {
+    const userFound = await this.prisma.user.findUnique({ where: { id } });
+    if (!userFound) {
+      throw new HttpException('User not found', 404);
+    }
+    return this.prisma.user.delete({ where: { id } });
   }
 }
+// asyn wh?

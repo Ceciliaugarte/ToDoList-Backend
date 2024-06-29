@@ -3,44 +3,72 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
-  Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dtos/CreateUser.dto';
+import { UpdateUserDto } from './dtos/UpdateUser.dto copy';
 
 @Controller('/users')
 export class UsersController {
-  constructor(private UsersService: UsersService) {}
+  constructor(private readonly UsersService: UsersService) {}
 
   @Get()
-  getAllUsers() {
-    return this.UsersService.index();
+  async getAllUsers() {
+    try {
+      return await this.UsersService.getUsers();
+    } catch (err) {
+      return `Error finding users, ${err.message}`;
+    }
   }
 
   @Get('/:id')
-  getOneUser(@Param('id') id: string) {
-    return this.UsersService.show(parseInt(id));
+  async getOneUser(@Param('id', ParseIntPipe) id: number) {
+    try {
+      const user = await this.UsersService.getUserById(id);
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (err) {
+      return `Error finding user, ${err.message}`;
+    }
   }
 
   @Post()
-  CreateUser(@Body() user: string) {
-    return this.UsersService.store(user);
+  @UsePipes(ValidationPipe)
+  async CreateUser(@Body() createUserDto: CreateUserDto) {
+    try {
+      return await this.UsersService.createOneUser(createUserDto);
+    } catch (err) {
+      return `Error creating users, ${err.message}`;
+    }
   }
 
-  @Put()
-  UpdateUser() {
-    return this.UsersService.update();
+  @Patch('/:id')
+  async UpdateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    try {
+      return await this.UsersService.updateUserById(id, updateUserDto);
+    } catch (err) {
+      return `Error updating users, ${err.message}`;
+    }
   }
 
-  @Patch()
-  UpdateUserStatus() {
-    return this.UsersService.updateStatus();
-  }
-
-  @Delete()
-  DeleteUser() {
-    return this.UsersService.destroy();
+  @Delete('/:id')
+  async DeleteUser(@Param('id', ParseIntPipe) id: number) {
+    try {
+      return await this.UsersService.deleteUserById(id);
+    } catch (err) {
+      return `Error deleting user: ${err.message}`;
+    }
   }
 }
