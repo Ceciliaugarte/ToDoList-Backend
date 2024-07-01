@@ -1,10 +1,11 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   getUsers() {
     return this.prisma.user.findMany({
@@ -41,7 +42,11 @@ export class UsersService {
     });
   }
 
-  createOneUser(data: Prisma.UserCreateInput) {
+  async createOneUser(data: Prisma.UserCreateInput) {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+    data.password = hashedPassword;
+    console.log(data);
     return this.prisma.user.create({ data });
   }
 
@@ -69,4 +74,3 @@ export class UsersService {
     return this.prisma.user.delete({ where: { id } });
   }
 }
-// asyn wh?

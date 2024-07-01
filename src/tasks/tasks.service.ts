@@ -1,37 +1,37 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TasksService {
-  index() {
-    //Busca en base de datos
+  constructor(private readonly prisma: PrismaService) {}
 
-    return 'Obtaining all tasks';
+  getTasks() {
+    return this.prisma.task.findMany();
   }
 
-  show(id: number) {
-    //Busca en base de datos
-    const TaskFound = 'Obtaining one task';
-    if (!TaskFound) {
-      throw new NotFoundException('Task not found');
+  getTaskById(id: number) {
+    return this.prisma.task.findUnique({ where: { id } });
+  }
+
+  createTask(userId: number, data: Prisma.TaskCreateWithoutUserInput) {
+    return this.prisma.task.create({
+      data: {
+        ...data,
+        userId,
+      },
+    });
+  }
+
+  updateTaskById(id: number, data: Prisma.TaskUpdateInput) {
+    return this.prisma.task.update({ where: { id }, data });
+  }
+
+  async deleteTaskById(id: number) {
+    const task = await this.getTaskById(id);
+    if (!task) {
+      throw new HttpException('Task not found', 404);
     }
-
-    return TaskFound;
-  }
-
-  store(task: string) {
-    return 'Task created';
-  }
-  update() {
-    return 'Task updated';
-  }
-  updateStatus() {
-    return 'Task status updated';
-  }
-  destroy() {
-    try {
-      return 'Task deleted';
-    } catch (error) {
-      throw new NotFoundException('Task was not found');
-    }
+    return this.prisma.task.delete({ where: { id } });
   }
 }
