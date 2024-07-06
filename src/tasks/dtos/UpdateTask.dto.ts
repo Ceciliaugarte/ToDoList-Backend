@@ -3,6 +3,7 @@ import {
   IsDateString,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -17,20 +18,12 @@ export class UpdateTaskDto {
   description: string;
 
   @IsDateString()
-  @IsOptional() //despues sacar
+  @IsNotEmpty()
   dueDate: Date;
 
   @IsEnum(TaskStatus)
   @IsOptional()
   status: TaskStatus = TaskStatus.pending;
-
-  @IsDateString()
-  @IsOptional()
-  createdAt?: Date;
-
-  @IsDateString()
-  @IsOptional()
-  updatedAt?: Date;
 
   @IsInt()
   userId: number;

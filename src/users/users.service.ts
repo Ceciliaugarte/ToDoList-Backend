@@ -16,8 +16,6 @@ export class UsersService {
             description: true,
             dueDate: true,
             status: true,
-            createdAt: true,
-            updatedAt: true,
           },
         },
       },
@@ -30,12 +28,11 @@ export class UsersService {
       include: {
         tasks: {
           select: {
+            id: true,
             title: true,
             description: true,
             dueDate: true,
             status: true,
-            createdAt: true,
-            updatedAt: true,
           },
         },
       },
@@ -46,7 +43,6 @@ export class UsersService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(data.password, saltRounds);
     data.password = hashedPassword;
-    console.log(data);
     return this.prisma.user.create({ data });
   }
 

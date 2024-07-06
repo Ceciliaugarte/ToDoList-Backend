@@ -13,10 +13,8 @@ CREATE TABLE `Task` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(255) NOT NULL,
     `description` VARCHAR(191) NOT NULL DEFAULT '',
-    `dueDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `dueDate` DATETIME(3) NOT NULL,
     `status` ENUM('pending', 'completed') NOT NULL DEFAULT 'pending',
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
     `userId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)

@@ -16,12 +16,11 @@ export class AuthService {
       include: {
         tasks: {
           select: {
+            id: true,
             title: true,
             description: true,
             dueDate: true,
             status: true,
-            createdAt: true,
-            updatedAt: true,
           },
         },
       },
@@ -37,10 +36,9 @@ export class AuthService {
 
     return {
       token: await this.jwtService.signAsync(payload),
-      user: {
-        username: user.username,
-        tasks: user.tasks,
-      },
+      id: user.id,
+      username: user.username,
+      tasks: user.tasks,
     };
   }
 }
