@@ -15,19 +15,19 @@ This API allows managing tasks, providing functionalities to create, read, updat
 ## Features:
 
 Tasks:
--> Get all tasks
--> Get a specific task
--> Create a new task
--> Update a task
--> Delete a task
+- Get all tasks
+- Get a specific task
+- Create a new task
+- Update a task
+- Delete a task
 
 Users:
--> Authenticate a user
--> Get all users
--> Get a specific user
--> Create a new user
--> Update a user
--> Delete a user
+- Authenticate a user
+- Get all users
+- Get a specific user
+- Create a new user
+- Update a user
+- Delete a user
 
 ## Installation:
 
