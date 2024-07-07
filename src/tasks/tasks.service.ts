@@ -14,8 +14,8 @@ export class TasksService {
     return this.prisma.task.findUnique({ where: { id } });
   }
 
-  createTask(userId: number, data: Prisma.TaskCreateWithoutUserInput) {
-    return this.prisma.task.create({
+  async createTask(userId: number, data: Prisma.TaskCreateWithoutUserInput) {
+    return await this.prisma.task.create({
       data: {
         ...data,
         userId,
@@ -23,8 +23,8 @@ export class TasksService {
     });
   }
 
-  updateTaskById(id: number, data: Prisma.TaskUpdateInput) {
-    return this.prisma.task.update({ where: { id }, data });
+  async updateTaskById(id: number, data: Prisma.TaskUpdateInput) {
+    return await this.prisma.task.update({ where: { id }, data });
   }
 
   async deleteTaskById(id: number) {
@@ -32,6 +32,6 @@ export class TasksService {
     if (!task) {
       throw new HttpException('Task not found', 404);
     }
-    return this.prisma.task.delete({ where: { id } });
+    return await this.prisma.task.delete({ where: { id } });
   }
 }

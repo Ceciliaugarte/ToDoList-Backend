@@ -8,18 +8,7 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   getUsers() {
-    return this.prisma.user.findMany({
-      include: {
-        tasks: {
-          select: {
-            title: true,
-            description: true,
-            dueDate: true,
-            status: true,
-          },
-        },
-      },
-    });
+    return this.prisma.user.findMany();
   }
 
   getUserById(id: number) {
@@ -43,7 +32,7 @@ export class UsersService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(data.password, saltRounds);
     data.password = hashedPassword;
-    return this.prisma.user.create({ data });
+    return await this.prisma.user.create({ data });
   }
 
   async updateUserById(id: number, data: Prisma.UserUpdateInput) {
@@ -59,7 +48,7 @@ export class UsersService {
         throw new HttpException('Username already taken', 400);
       }
     }
-    return this.prisma.user.update({ where: { id }, data });
+    return await this.prisma.user.update({ where: { id }, data });
   }
 
   async deleteUserById(id: number) {
@@ -67,6 +56,6 @@ export class UsersService {
     if (!userFound) {
       throw new HttpException('User not found', 404);
     }
-    return this.prisma.user.delete({ where: { id } });
+    return await this.prisma.user.delete({ where: { id } });
   }
 }
