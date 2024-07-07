@@ -30,7 +30,6 @@ async function main() {
       user: { connect: { id: user.id } },
     },
   });
-  console.log('Seeders created');
 }
 
 main()
