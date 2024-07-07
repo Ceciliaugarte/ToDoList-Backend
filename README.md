@@ -79,34 +79,40 @@ TASKS:
 - `POST /tasks` | Create new task
 
 Example of posting a task:
-`{
+```json
+{
 "title": "Hw",
 "description": "English hw -Writing and listening",
 "dueDate": "2024-07-22T00:00:00Z",
 "userId": 3
-}`
+}
+```
 
 Expected answer:
-`{
+```json
+{
 "id": 6,
 "title": "Hw",
 "description": "English hw -Writing and listening",
 "dueDate": "2024-07-22T00:00:00.000Z",
 "status": "pending",
 "userId": 3
-}`
+}
+```
 
 - `PATCH /tasks/:id` | Update a task
 
 Example updating a task:
-`{
+```json
+{
 "id":3,
 "title": "Purchase the cooking books",
 "description": "They are in sale",
 "dueDate": "2024-06-30T15:27:59.401Z",
 "status": "pending",
 "userId": 5
-}`
+}
+```
 It will return the same task updated
 
 - `DELETE /tasks/:id` | Delete a task
@@ -115,12 +121,15 @@ USERS:
 - `POST /login` | Authenticate a user
 
 Example of authenticating a user:
-`{
+```json
+{
 "username": "luis",
 "password": "1234"
-}`
+}
+```
 Expected answer:
-`{
+```json
+{
 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoidGluaSIsImlhdCI6MTcyMDMxMzMyNiwiZXhwIjoxNzIwMzI0MTI2fQ.JehhSBTe2GgWGR0rEp8lmf5eNhymyaCWGobAjD70Qvc",
 "id": 3,
 "username": "luis",
@@ -139,26 +148,31 @@ Expected answer:
 "dueDate": "2024-06-30T15:27:59.401Z",
 "status": "pending",
 }]
-}`
+}
+```
 
 - `POST /users` | Create/register a user
 - `GET /users` | Get all users
 
 Example creating a new user:
-`{
+```json
+{
 "username": "maria",
 "password": "1234"
-}`
+}
+```
 It will return the new user created
 
 - `GET /users/:id` | Get one user
 - `PATCH /users/:id` | Update a user
 
 Example updating a new user:
-`{
+```json
+{
 "username": "maria",
 "password": "1234"
-}`
+}
+```
 It will return the new user updated
 
 - `DELETE /users/:id` | Delete a user
