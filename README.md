@@ -141,8 +141,8 @@ Expected answer:
 }]
 }`
 
--> `POST /users` | Create/register a user
--> `GET /users` | Get all users
+- `POST /users` | Create/register a user
+- `GET /users` | Get all users
 
 Example creating a new user:
 `{
@@ -151,8 +151,8 @@ Example creating a new user:
 }`
 It will return the new user created
 
--> `GET /users/:id` | Get one user
--> `PATCH /users/:id` | Update a user
+- `GET /users/:id` | Get one user
+- `PATCH /users/:id` | Update a user
 
 Example updating a new user:
 `{
@@ -161,4 +161,4 @@ Example updating a new user:
 }`
 It will return the new user updated
 
--> `DELETE /users/:id` | Delete a user
+- `DELETE /users/:id` | Delete a user
