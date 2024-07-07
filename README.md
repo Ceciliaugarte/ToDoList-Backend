@@ -169,10 +169,17 @@ It will return the new user created
 Example updating a new user:
 ```json
 {
-"username": "maria",
+"username": "maria1",
 "password": "1234"
 }
 ```
 It will return the new user updated
 
 - `DELETE /users/:id` | Delete a user
+
+
+## Environment Variables:
+
+Make sure to set the following environment variables in your .env file:
+- `DATABASE_URL` - MySQL database name
+- `JWT_SECRET` - Secret key for JSON Web Token generation
