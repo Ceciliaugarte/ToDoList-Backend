@@ -107,6 +107,10 @@ Start the server:
 npm run start
 ```
 
+Once the server is running, you can explore the API using Swagger UI.
+
+**Access the API documentation:** (http://localhost:3000/docs)
+
 ### API Endpoints:
 
 TASKS:
