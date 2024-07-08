@@ -14,7 +14,7 @@ This API allows managing tasks, providing functionalities to create, read, updat
 
 ## Architecture:
 
-### General architecture:
+### General overview:
 
 The project follows a microservices architecture using NestJS. NestJS allows structuring the application into modules, controllers, and services, following the MVC (Model-View-Controller) design pattern. User authentication and task management are integrated as separate modules, facilitating scalability and code maintenance.
 
