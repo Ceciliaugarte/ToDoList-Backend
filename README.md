@@ -15,6 +15,7 @@ This API allows managing tasks, providing functionalities to create, read, updat
 ## Features:
 
 Tasks:
+
 - Get all tasks
 - Get a specific task
 - Create a new task
@@ -22,6 +23,7 @@ Tasks:
 - Delete a task
 
 Users:
+
 - Authenticate a user
 - Get all users
 - Get a specific user
@@ -53,16 +55,16 @@ Configure JWT in .env file:
 
 - Create a variable called JWT_SECRET and assign a secret value
 
-Seed the database with a test user and tasks:
-
-```bash
-npx prisma db seed
-```
-
 Run database migration:
 
 ```bash
 npx prisma migrate dev --name init
+```
+
+Seed the database with a test user and tasks:
+
+```bash
+npm run seed
 ```
 
 Start the server:
@@ -74,80 +76,90 @@ npm run start
 ### API Endpoints:
 
 TASKS:
+
 - `GET /tasks` | Get all tasks
 - `GET /tasks/:id` | Get one task
 - `POST /tasks` | Create new task
 
 Example of posting a task:
+
 ```json
 {
-"title": "Hw",
-"description": "English hw -Writing and listening",
-"dueDate": "2024-07-22T00:00:00Z",
-"userId": 3
+  "title": "Hw",
+  "description": "English hw -Writing and listening",
+  "dueDate": "2024-07-22T00:00:00Z",
+  "userId": 3
 }
 ```
 
 Expected answer:
+
 ```json
 {
-"id": 6,
-"title": "Hw",
-"description": "English hw -Writing and listening",
-"dueDate": "2024-07-22T00:00:00.000Z",
-"status": "pending",
-"userId": 3
+  "id": 6,
+  "title": "Hw",
+  "description": "English hw -Writing and listening",
+  "dueDate": "2024-07-22T00:00:00.000Z",
+  "status": "pending",
+  "userId": 3
 }
 ```
 
 - `PATCH /tasks/:id` | Update a task
 
 Example updating a task:
+
 ```json
 {
-"id":3,
-"title": "Purchase the cooking books",
-"description": "They are in sale",
-"dueDate": "2024-06-30T15:27:59.401Z",
-"status": "pending",
-"userId": 5
+  "id": 3,
+  "title": "Purchase the cooking books",
+  "description": "They are in sale",
+  "dueDate": "2024-06-30T15:27:59.401Z",
+  "status": "pending",
+  "userId": 5
 }
 ```
+
 It will return the same task updated
 
 - `DELETE /tasks/:id` | Delete a task
 
 USERS:
+
 - `POST /login` | Authenticate a user
 
 Example of authenticating a user:
+
 ```json
 {
-"username": "luis",
-"password": "1234"
+  "username": "luis",
+  "password": "1234"
 }
 ```
+
 Expected answer:
+
 ```json
 {
-"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoidGluaSIsImlhdCI6MTcyMDMxMzMyNiwiZXhwIjoxNzIwMzI0MTI2fQ.JehhSBTe2GgWGR0rEp8lmf5eNhymyaCWGobAjD70Qvc",
-"id": 3,
-"username": "luis",
-"tasks": [
-{
-"id": 3,
-"title": "Hw",
-"description": "English hw -Writing and listening",
-"dueDate": "2024-07-22T00:00:00.000Z",
-"status": "pending"
-},
-{
-"id":4,
-"title": "Purchase the cooking books",
-"description": "They are in sale",
-"dueDate": "2024-06-30T15:27:59.401Z",
-"status": "pending",
-}]
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoidGluaSIsImlhdCI6MTcyMDMxMzMyNiwiZXhwIjoxNzIwMzI0MTI2fQ.JehhSBTe2GgWGR0rEp8lmf5eNhymyaCWGobAjD70Qvc",
+  "id": 3,
+  "username": "luis",
+  "tasks": [
+    {
+      "id": 3,
+      "title": "Hw",
+      "description": "English hw -Writing and listening",
+      "dueDate": "2024-07-22T00:00:00.000Z",
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "title": "Purchase the cooking books",
+      "description": "They are in sale",
+      "dueDate": "2024-06-30T15:27:59.401Z",
+      "status": "pending"
+    }
+  ]
 }
 ```
 
@@ -155,31 +167,35 @@ Expected answer:
 - `GET /users` | Get all users
 
 Example creating a new user:
+
 ```json
 {
-"username": "maria",
-"password": "1234"
+  "username": "maria",
+  "password": "1234"
 }
 ```
+
 It will return the new user created
 
 - `GET /users/:id` | Get one user
 - `PATCH /users/:id` | Update a user
 
 Example updating a new user:
+
 ```json
 {
-"username": "maria1",
-"password": "1234"
+  "username": "maria1",
+  "password": "1234"
 }
 ```
+
 It will return the new user updated
 
 - `DELETE /users/:id` | Delete a user
 
-
 ## Environment Variables:
 
 Make sure to set the following environment variables in your .env file:
+
 - `DATABASE_URL` - MySQL database name
 - `JWT_SECRET` - Secret key for JSON Web Token generation

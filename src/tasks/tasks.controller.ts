@@ -55,21 +55,21 @@ export class TasksController {
   }
 
   @Patch('/:id')
-  UpdateTask(
+  async UpdateTask(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateTaskDto: UpdateTaskDto,
   ) {
     try {
-      return this.tasksService.updateTaskById(id, updateTaskDto);
+      return await this.tasksService.updateTaskById(id, updateTaskDto);
     } catch (err) {
       return `Error updating task, ${err.message}`;
     }
   }
 
   @Delete('/:id')
-  DeleteTask(@Param('id', ParseIntPipe) id: number) {
+  async DeleteTask(@Param('id', ParseIntPipe) id: number) {
     try {
-      return this.tasksService.deleteTaskById(id);
+      return await this.tasksService.deleteTaskById(id);
     } catch (err) {
       return `Error deleting task, ${err.message}`;
     }

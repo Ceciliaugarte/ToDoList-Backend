@@ -1,16 +1,20 @@
 import { PrismaClient, TaskStatus } from '@prisma/client';
+import { config } from 'dotenv';
 const bcrypt = require('bcrypt');
+
+config();
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('1234', 10);
+  const hashedPassword: string = await bcrypt.hash('1234', 10);
   const user = await prisma.user.create({
     data: {
       username: 'test-user',
       password: hashedPassword,
     },
   });
+
   await prisma.task.create({
     data: {
       title: 'Task 1',

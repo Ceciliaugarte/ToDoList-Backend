@@ -52,10 +52,17 @@ export class UsersService {
   }
 
   async deleteUserById(id: number) {
-    const userFound = await this.prisma.user.findUnique({ where: { id } });
+    const userFound = await this.getUserById(id);
     if (!userFound) {
       throw new HttpException('User not found', 404);
     }
+
+    if (userFound.tasks.length > 0) {
+      await this.prisma.task.deleteMany({
+        where: { userId: id },
+      });
+    }
+
     return await this.prisma.user.delete({ where: { id } });
   }
 }
