@@ -12,6 +12,40 @@ This API allows managing tasks, providing functionalities to create, read, updat
 - **MySQL**
 - **JWT (JSON Web Tokens)**
 
+## Architecture:
+
+### General architecture:
+
+The project follows a microservices architecture using NestJS. NestJS allows structuring the application into modules, controllers, and services, following the MVC (Model-View-Controller) design pattern. User authentication and task management are integrated as separate modules, facilitating scalability and code maintenance.
+
+### Architecture diagram:
+
+       +-----------+
+       |   Client  |
+       +-----+-----+
+             |
+       +-----v-----+
+       |   NestJS  |
+       |   Server  |
+       +-----+-----+
+             |
+       +-----v-----+
+       |   Prisma  |
+       |  MySQL DB |
+       +-----------+
+
+### Entity relationships:
+
+There is a one-to-many relationship between users and tasks. Each user can have multiple tasks associated with them, while each task belongs to only one user. This relationship is managed through foreign keys in the database, ensuring referential integrity.
+
+### Security:
+
+Security is implemented using JSON Web Tokens (JWT) for user authentication. Passwords are stored in the database after being encrypted with bcrypt, ensuring their protection.
+
+### Scalability and performance:
+
+To enhance performance, MySQL database connection is implemented using Prisma for efficient query operations. Additionally, NestJS allows the implementation of caching and horizontal scalability through microservices adoption if necessary.
+
 ## Features:
 
 Tasks:
@@ -77,9 +111,9 @@ npm run start
 
 TASKS:
 
-- `GET /tasks` | Get all tasks
-- `GET /tasks/:id` | Get one task
-- `POST /tasks` | Create new task
+- `GET /tasks` | Get all tasks (requires token)
+- `GET /tasks/:id` | Get one task (requires token)
+- `POST /tasks` | Create new task (requires token)
 
 Example of posting a task:
 
@@ -105,7 +139,7 @@ Expected answer:
 }
 ```
 
-- `PATCH /tasks/:id` | Update a task
+- `PATCH /tasks/:id` | Update a task (requires token)
 
 Example updating a task:
 
@@ -122,7 +156,7 @@ Example updating a task:
 
 It will return the same task updated
 
-- `DELETE /tasks/:id` | Delete a task
+- `DELETE /tasks/:id` | Delete a task (requires token)
 
 USERS:
 
@@ -164,7 +198,7 @@ Expected answer:
 ```
 
 - `POST /users` | Create/register a user
-- `GET /users` | Get all users
+- `GET /users` | Get all users (requires token)
 
 Example creating a new user:
 
@@ -177,8 +211,8 @@ Example creating a new user:
 
 It will return the new user created
 
-- `GET /users/:id` | Get one user
-- `PATCH /users/:id` | Update a user
+- `GET /users/:id` | Get one user (requires token)
+- `PATCH /users/:id` | Update a user (requires token)
 
 Example updating a new user:
 
@@ -191,7 +225,7 @@ Example updating a new user:
 
 It will return the new user updated
 
-- `DELETE /users/:id` | Delete a user
+- `DELETE /users/:id` | Delete a user (requires token)
 
 ## Environment Variables:
 

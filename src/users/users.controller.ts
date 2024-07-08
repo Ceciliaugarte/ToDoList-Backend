@@ -23,6 +23,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly UsersService: UsersService) {}
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get()
   async getAllUsers() {
